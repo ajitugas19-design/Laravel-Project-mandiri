@@ -3,24 +3,26 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
+use App\Models\User;
+use App\Models\Buku;
+use App\Models\BukuTersimpan;
 
 class AuthController extends Controller
 {
-public function showAuth()
+    public function showAuth()
     {
-        // Jika sudah login, redirect ke dashboard
-        if (Session::has('user')) {
-            return redirect('/dashboard');
+        if (Auth::check()) {
+            return redirect('/tampilan-awal');
         }
         return view('auth-main');
     }
 
     public function showDaftar()
     {
-        // Jika sudah login, redirect ke dashboard
-        if (Session::has('user')) {
-            return redirect('/dashboard');
+        if (Auth::check()) {
+            return redirect('/tampilan-awal');
         }
         return view('daftar');
     }
@@ -28,82 +30,78 @@ public function showAuth()
     public function login(Request $request)
     {
         $request->validate([
-            'username' => 'required|string|max:255',
-            'password' => 'required|string|max:255',
+            'username' => 'required|string',
+            'password' => 'required|string',
         ]);
 
-        $username = $request->input('username');
-        $password = $request->input('password');
+        $user = User::where('username', $request->username)->first();
 
-        // Simulasi login sederhana (ganti dengan DB nanti)
-        if ($username === 'admin' && $password === 'password') {
-            Session::put('user', ['username' => $username]);
-            return redirect('/dashboard')->with('success', 'Login berhasil!');
-        } else {
-            return back()->with('error', 'Username atau password salah!');
+        // Plain text password from DB SQL dump
+        if ($user && $request->password === $user->password) {
+            Auth::login($user);
+            return redirect('/tampilan-awal')->with('success', 'Login berhasil!');
         }
+
+        return back()->with('error', 'Username atau password salah! Username: admin atau aji, Password: 123456');
     }
 
     public function daftar(Request $request)
     {
         $request->validate([
-            'username' => 'required|string|max:255|unique:users', // simulasi unique
+            'username' => 'required|string|max:50|unique:users',
+            'email' => 'required|email|unique:users',
             'password' => 'required|string|min:6|max:255',
-            'keterangan' => 'required|string|max:500',
+            'deskripsi' => 'nullable|string',
         ]);
 
-        // Simulasi register (ganti dengan DB nanti)
-        Session::put('user', [
-            'username' => $request->input('username'),
-            'keterangan' => $request->input('keterangan')
+        $user = User::create([
+            'username' => $request->username,
+            'email' => $request->email,
+            'password' => $request->password, // Plain for now
+            'deskripsi' => $request->deskripsi ?? '',
+            'role' => 'user',
         ]);
 
-        return redirect('/dashboard')->with('success', 'Pendaftaran berhasil! Selamat datang ' . $request->input('username'));
+        Auth::login($user);
+        return redirect('/tampilan-awal')->with('success', 'Pendaftaran berhasil!');
     }
 
-    public function dashboard()
+    public function tampilanAwal()
     {
-        if (!Session::has('user')) {
+        if (!Auth::check()) {
             return redirect('/');
         }
-        $user = Session::get('user');
-        return view('dashboard', ['user' => $user]);
+
+        $user = Auth::user();
+        $bukuTersimpan = BukuTersimpan::with('buku.kategori')->where('id_user', $user->id_user)->get();
+        $semuaBuku = Buku::with('kategori')->get();
+
+        return view('Tampilan_Awal', compact('user', 'bukuTersimpan', 'semuaBuku'));
+    }
+
+    public function logout()
+    {
+        Auth::logout();
+        return redirect('/')->with('success', 'Logout berhasil!');
+    }
+
+    // Deprecated
+    public function dashboard()
+    {
+        return $this->tampilanAwal();
     }
 
     public function showForgot()
     {
-        if (Session::has('user')) {
-            return redirect('/dashboard');
+        if (Auth::check()) {
+            return redirect('/tampilan-awal');
         }
         return view('forgot-password');
     }
 
     public function forgotPassword(Request $request)
     {
-        $request->validate([
-            'no_telp' => 'required|string|max:15',
-            'email' => 'required|email',
-            'new_password' => 'required|string|min:6|max:255',
-        ]);
-
-        $no_telp = $request->input('no_telp');
-        $email = $request->input('email');
-        $new_password = $request->input('new_password');
-
-        // Simulasi reset: cek admin
-        if ($email === 'admin@example.com' && $no_telp === '08123456789') {
-            // Set session login dengan pass baru (simulasi)
-            Session::put('user', ['username' => 'admin']);
-            return redirect('/dashboard')->with('success', 'Password berhasil direset! Selamat datang admin.');
-        } else {
-            return back()->with('error', 'Email atau nomor telepon tidak cocok!');
-        }
-    }
-
-    public function logout()
-    {
-        Session::forget('user');
-        return redirect('/')->with('success', 'Logout berhasil!');
+        return back()->with('error', 'Fitur coming soon');
     }
 }
 

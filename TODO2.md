@@ -1,11 +1,20 @@
-# TODO2: Tambah Fitur Lupa Password
+# TODO2: Connect DB perpustakaan_digital & Role-Based Tampilan - SELASAI ✅
 
-## Steps:
+## Semua Step:
 
-- [x]   1. Buat resources/views/forgot-password.blade.php (form nomor telpon, email, password baru).
-- [x]   2. Update routes/web.php tambah forgot.get & forgot.post.
-- [x]   3. Update app/Http/Controllers/AuthController.php tambah showForgot() & forgotPassword().
-- [x]   4. Update auth.blade.php: buat link Forgot password fungsional ke forgot.get.
-- [x]   5. Test.
+- [x]   1. .env mysql perpustakaan_digital (user tambah manual)
+- [x]   2. Model User custom (users table, relations)
+- [x]   3. Models Buku, BukuTersimpan, Kategori, RatingBuku
+- [x]   4. AuthController DB login (admin/aji pass 123456), tampilanAwal personal buku
+- [x]   5. Tampilan_Awal role-based: admin CRUD buku, user baca/simpan
+- [x]   6. Routes auth protected + buku store
+- [x]   7. Test: config:clear, serve, login test tampilan berbeda
 
-Completed: None yet.
+## Cara Test:
+
+1. `php artisan config:clear`
+2. `php artisan serve`
+3. Login admin@ email.com / 123456 → admin panel tambah buku
+4. Login aji / 123456 → buku tersimpan pribadi
+
+**Note:** Password DB plain text, production hash ulang. Storage link: `php artisan storage:link` untuk cover/file.
