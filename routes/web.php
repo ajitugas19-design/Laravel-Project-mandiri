@@ -20,5 +20,13 @@ Route::middleware('auth')->group(function () {
     // Buku routes
     Route::get('/buku', [BukuController::class, 'index'])->name('buku.index');
     Route::post('/buku', [BukuController::class, 'store'])->name('buku.store');
+    
+    // Sidebar separate pages
+    Route::get('/sidebar/setting-account', [AuthController::class, 'settingAccount'])->name('sidebar.setting-account');
+    Route::get('/sidebar/buku-simpan', [AuthController::class, 'bukuSimpan'])->name('sidebar.buku-simpan');
+    Route::get('/sidebar/scane-barcode', [AuthController::class, 'scaneBarcode'])->name('sidebar.scane-barcode');
+    Route::get('/sidebar/settings', [AuthController::class, 'sidebarSettings'])->name('sidebar.settings');
 });
+
+
 

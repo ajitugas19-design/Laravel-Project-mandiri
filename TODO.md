@@ -1,9 +1,12 @@
-# Sidebar Implementation Plan
+# Fix 419 Page Expired after Login - Progress
 
-## Steps:
+## ✅ Completed Steps
 
-- [ ]   1. Create TODO.md (current)
-- [x]   2. Update resources/views/Tampilan_Awal.blade.php with exact sidebar (CSS, HTML structure, profile with $user->username, menu items, toggle + scripts)
-- [x]   3. Update TODO-sidebar.md
-- [x]   4. Test: php artisan serve, login, visit /tampilan-awal
-- [ ]   5. Complete: attempt_completion
+- [x] Langkah 1: Buat file .env dengan SESSION_DRIVER=file dan config XAMPP
+
+## ⏳ Next Steps
+
+- [ ] Langkah 2: Generate APP_KEY (`php artisan key:generate`)
+- [ ] Langkah 3: Clear caches (`php artisan config:clear`, `cache:clear`, `view:clear`)
+- [ ] Langkah 4: Test login di browser
+- [ ] Langkah 5: Jika masih error, optional migrate sessions table

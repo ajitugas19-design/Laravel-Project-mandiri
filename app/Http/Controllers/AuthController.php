@@ -103,5 +103,31 @@ class AuthController extends Controller
     {
         return back()->with('error', 'Fitur coming soon');
     }
+
+    // Sidebar pages
+    public function settingAccount()
+    {
+        $user = Auth::user();
+        return view('Sidebar.Setting_account', compact('user'));
+    }
+
+    public function bukuSimpan()
+    {
+        $user = Auth::user();
+        $bukuTersimpan = BukuTersimpan::with('buku.kategori')->where('id_user', $user->id_user)->get();
+        return view('Sidebar.buku_simpan', compact('bukuTersimpan'));
+    }
+
+    public function scaneBarcode()
+    {
+        return view('Sidebar.scane_barcode');
+    }
+
+    public function sidebarSettings()
+    {
+        return view('Sidebar.settings');
+    }
 }
+
+
 

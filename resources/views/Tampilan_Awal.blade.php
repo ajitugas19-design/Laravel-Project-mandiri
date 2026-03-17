@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Perpustakaan Digital - Dashboard</title>
+<title>Perpustakaan Digital</title>
 
 <style>
 
@@ -15,14 +15,16 @@ box-sizing:border-box;
 
 body{
 font-family:Segoe UI,sans-serif;
-background-image:url('/images/u_x3nnlmkfcx-background-8471342_1920.jpg');
-background-size:cover;
-background-position:center;
-background-attachment:fixed;
+background:url('/images/u_x3nnlmkfcx-background-8471342_1920.jpg') no-repeat center/cover;
 }
 
-/* toggle button */
+/* ANIMASI */
+@keyframes fadeIn{
+from{opacity:0; transform:translateY(20px);}
+to{opacity:1; transform:translateY(0);}
+}
 
+/* TOGGLE */
 .toggle-btn{
 position:fixed;
 top:15px;
@@ -34,17 +36,19 @@ color:white;
 padding:6px 12px;
 border-radius:5px;
 z-index:1003;
+transition:0.3s;
 }
 
-/* overlay */
+.toggle-btn.move{
+left:265px;
+}
 
+/* OVERLAY */
 .overlay{
 position:fixed;
-top:0;
-left:0;
 width:100%;
 height:100%;
-background:rgba(0,0,0,0.4);
+background:rgba(0,0,0,0.5);
 opacity:0;
 visibility:hidden;
 transition:0.3s;
@@ -56,32 +60,27 @@ opacity:1;
 visibility:visible;
 }
 
-/* sidebar */
-.toggle-btn.hide{
-opacity:0;
-pointer-events:none;
-}
-
+/* SIDEBAR */
 .sidebar{
 position:fixed;
-left:-250px;
+left:-260px;
 top:0;
-width:250px;
+width:260px;
 height:100%;
-background:#d6d1d9;
-transition:0.35s ease;
+background:rgba(255,255,255,0.9);
+backdrop-filter:blur(10px);
+transition:0.4s;
 z-index:1002;
+box-shadow:5px 0 20px rgba(0,0,0,0.2);
 }
 
 .sidebar.open{
 left:0;
 }
 
-/* profile */
-
+/* PROFILE */
 .profile{
 display:flex;
-align-items:center;
 gap:10px;
 padding:20px;
 border-bottom:1px solid rgba(0,0,0,0.1);
@@ -89,165 +88,141 @@ border-bottom:1px solid rgba(0,0,0,0.1);
 
 .profile img{
 width:50px;
-height:50px;
 border-radius:50%;
 }
 
-.profile h3{
-font-size:18px;
-}
-
-.profile p{
-font-size:13px;
-color:#555;
-}
-
-/* menu */
-
+/* MENU */
 .menu a{
 display:block;
-padding:15px 20px;
-text-decoration:none;
+padding:15px;
 color:#333;
+text-decoration:none;
+transition:0.2s;
 }
 
 .menu a:hover{
-background:#cfc9d2;
+background:#e0e0e0;
+padding-left:25px;
 }
 
-.menu a.active{
-background:#c7c1cc;
-border-top:2px solid #3f51ff;
-border-bottom:2px solid #3f51ff;
-}
-
-/* content */
-
+/* CONTENT */
 .content{
-padding:70px 40px 40px 40px;
-margin-left:0;
-transition:0.3s;
+padding:80px 30px;
+transition:0.4s;
+animation:fadeIn 0.8s;
 }
 
-/* welcome */
+.content.shift{
+margin-left:260px;
+}
 
+/* WELCOME */
 .welcome{
 text-align:center;
-margin-bottom:50px;
+margin-bottom:40px;
 }
 
 .welcome h1{
-font-size:48px;
-font-weight:800;
-color:#333;
+font-size:36px;
 }
 
-.welcome h2{
-margin-top:10px;
-color:#555;
-}
-
-/* slider */
-
-.slider-area{
-display:flex;
-align-items:center;
-justify-content:center;
-gap:30px;
-margin-bottom:60px;
-}
-
-.avatar-list{
-display:flex;
-flex-direction:column;
-gap:12px;
-}
-
-.avatar{
-width:50px;
-height:50px;
-border-radius:15px;
-object-fit:cover;
-border:3px solid rgba(255,255,255,0.3);
-}
-
+/* SLIDER */
 .slider{
-width:700px;
+max-width:800px;
+margin:auto;
 overflow:hidden;
-border-radius:25px;
-box-shadow:0 15px 35px rgba(0,0,0,0.3);
+border-radius:20px;
+box-shadow:0 15px 30px rgba(0,0,0,0.3);
 }
 
 .slides{
 display:flex;
-width:300%;
-transition:0.6s;
+transition:0.8s ease-in-out;
 }
 
 .slides img{
 width:100%;
-height:280px;
+height:250px;
 object-fit:cover;
 }
 
-/* rekomendasi */
+/* REKOMENDASI */
+.rekomendasi{
+margin-top:40px;
+}
 
 .rekomendasi h2{
 text-align:center;
-margin-bottom:30px;
-color:#333;
+margin-bottom:20px;
 }
 
+/* GRID 5 CARD */
 .card-container{
 display:grid;
-grid-template-columns:repeat(auto-fill,minmax(280px,1fr));
-gap:25px;
+grid-template-columns:repeat(5,1fr);
+gap:15px;
 }
 
+/* CARD KECIL */
 .card{
-background:white;
-border-radius:20px;
+background:rgba(255,255,255,0.9);
+border-radius:12px;
 overflow:hidden;
-box-shadow:0 10px 30px rgba(0,0,0,0.2);
 transition:0.3s;
+font-size:14px;
+animation:fadeIn 1s;
 }
 
 .card:hover{
-transform:translateY(-10px);
+transform:translateY(-8px) scale(1.02);
+box-shadow:0 10px 20px rgba(0,0,0,0.3);
 }
 
 .card img{
 width:100%;
-height:200px;
+height:130px;
 object-fit:cover;
 }
 
 .card-body{
-padding:20px;
+padding:10px;
+}
+
+.card h4{
+font-size:14px;
+margin-bottom:5px;
+}
+
+.card p{
+font-size:12px;
+color:#555;
 }
 
 .btn{
+display:inline-block;
+margin-top:8px;
 background:linear-gradient(45deg,#4CAF50,#66BB6A);
 color:white;
-padding:10px 20px;
-border-radius:25px;
+padding:5px 10px;
+border-radius:20px;
+font-size:12px;
 text-decoration:none;
-display:inline-block;
-margin-top:10px;
+transition:0.3s;
 }
 
-/* footer */
+.btn:hover{
+transform:scale(1.1);
+}
 
+/* FOOTER */
 .footer{
 text-align:center;
-padding:30px;
-background:rgba(0,0,0,0.05);
-margin-top:50px;
-color:#666;
+padding:20px;
+margin-top:40px;
+background:rgba(0,0,0,0.1);
 }
 
-/* logout */
-
+/* LOGOUT */
 .logout-form{
 position:fixed;
 top:15px;
@@ -256,26 +231,39 @@ z-index:1003;
 }
 
 .logout-btn{
-background:#ff4444;
+background:red;
 color:white;
-padding:8px 16px;
+padding:8px 15px;
 border:none;
 border-radius:5px;
 cursor:pointer;
 }
 
-/* responsive */
+/* RESPONSIVE */
+@media(max-width:1200px){
+.card-container{
+grid-template-columns:repeat(4,1fr);
+}
+}
 
 @media(max-width:768px){
-
-.slider-area{
-flex-direction:column;
+.card-container{
+grid-template-columns:repeat(2,1fr);
 }
 
-.slider{
-width:100%;
+.content.shift{
+margin-left:0;
 }
 
+.toggle-btn.move{
+left:15px;
+}
+}
+
+@media(max-width:480px){
+.card-container{
+grid-template-columns:1fr;
+}
 }
 
 </style>
@@ -283,17 +271,15 @@ width:100%;
 
 <body>
 
-<div class="toggle-btn" onclick="toggleSidebar(event)">☰</div>
+<div class="toggle-btn" onclick="toggleSidebar()">☰</div>
 
 <form method="POST" action="/logout" class="logout-form">
 @csrf
-<button type="submit" class="logout-btn">Logout</button>
+<button class="logout-btn">Logout</button>
 </form>
 
-<!-- sidebar -->
-
+<!-- SIDEBAR -->
 <div class="sidebar" id="sidebar">
-
 <div class="profile">
 <img src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png">
 <div>
@@ -305,93 +291,62 @@ width:100%;
 <div class="menu">
 <a href="#">Setting Account</a>
 <a href="#">Buku Tersimpan</a>
-<a href="#">Scane Barcode</a>
-<a href="#" class="active">Settings</a>
+<a href="#">Scan Barcode</a>
+<a href="#">Settings</a>
 </div>
-
 </div>
-
-<!-- overlay -->
 
 <div class="overlay" id="overlay"></div>
 
-<!-- content -->
-
+<!-- CONTENT -->
 <div class="content" id="content">
 
 <section class="welcome">
 <h1>Welcome</h1>
-<h2>Selamat datang, {{ $user->username ?? 'Pengguna' }} di Perpustakaan Digital</h2>
+<h2>Selamat datang, {{ $user->username }}</h2>
 </section>
 
-<div class="slider-area">
-
-<div class="avatar-list">
-<img src="https://i.pravatar.cc/50?img=1" class="avatar">
-<img src="https://i.pravatar.cc/50?img=2" class="avatar">
-<img src="https://i.pravatar.cc/50?img=3" class="avatar">
-</div>
-
-<div class="slider">
+<!-- SLIDER -->
+<div class="slider" id="slider">
 <div class="slides">
-<img src="https://picsum.photos/900/280?1">
-<img src="https://picsum.photos/900/280?2">
-<img src="https://picsum.photos/900/280?3">
+<img src="https://picsum.photos/800/250?1">
+<img src="https://picsum.photos/800/250?2">
+<img src="https://picsum.photos/800/250?3">
 </div>
 </div>
 
-<div class="avatar-list">
-<img src="https://i.pravatar.cc/50?img=4" class="avatar">
-<img src="https://i.pravatar.cc/50?img=5" class="avatar">
-<img src="https://i.pravatar.cc/50?img=6" class="avatar">
-</div>
 
-</div>
-
+<!-- REKOMENDASI -->
 <section class="rekomendasi">
-
-<h2>📚 Rekomendasi Buku Terbaru</h2>
+<h2 style="text-align: left;">📚 Rekomendasi Buku Cerita</h2>
 
 <div class="card-container">
 
-<div class="card">
-<img src="https://picsum.photos/280/200?1">
-<div class="card-body">
-<h4>Algoritma dan Pemrograman</h4>
-<p>Ir. Sukamto, M.T</p>
-<a href="#" class="btn">Baca Sekarang</a>
-</div>
-</div>
-
-<div class="card">
-<img src="https://picsum.photos/280/200?2">
-<div class="card-body">
-<h4>Struktur Data</h4>
-<p>Dr. Budi Santoso</p>
-<a href="#" class="btn">Baca Sekarang</a>
-</div>
-</div>
-
-<div class="card">
-<img src="https://picsum.photos/280/200?3">
-<div class="card-body">
-<h4>Database Design</h4>
-<p>Prof. Siti Aminah</p>
-<a href="#" class="btn">Baca Sekarang</a>
-</div>
-</div>
-
-<div class="card">
-<img src="https://picsum.photos/280/200?4">
-<div class="card-body">
-<h4>Belajar Python</h4>
-<p>Prof. Ahmat Panjau Aji</p>
-<a href="#" class="btn">Baca Sekarang</a>
-</div>
-</div>
+<!-- 5+ CARD -->
+<div class="card"><img src="https://picsum.photos/200/150?1"><div class="card-body"><h4>Algoritma</h4><p>Sukamto</p><a href="#" class="btn">Baca</a></div></div>
+<div class="card"><img src="https://picsum.photos/200/150?2"><div class="card-body"><h4>Struktur Data</h4><p>Budi</p><a href="#" class="btn">Baca</a></div></div>
+<div class="card"><img src="https://picsum.photos/200/150?3"><div class="card-body"><h4>Database</h4><p>Siti</p><a href="#" class="btn">Baca</a></div></div>
+<div class="card"><img src="https://picsum.photos/200/150?4"><div class="card-body"><h4>Python</h4><p>Aji</p><a href="#" class="btn">Baca</a></div></div>
+<div class="card"><img src="https://picsum.photos/200/150?5"><div class="card-body"><h4>AI</h4><p>John</p><a href="#" class="btn">Baca</a></div></div>
 
 </div>
+</section>
 
+<!-- REKOMENDASI -->
+<section class="rekomendasi">
+<h2 style="text-align: left;">📚 Rekomendasi Buku Belajar</h2>
+
+
+<div class="card-container">
+
+<!-- 5+ CARD -->
+<div class="card"><img src="https://picsum.photos/200/150?6"><div class="card-body"><h4>Algoritma</h4><p>Sukamto</p><a href="#" class="btn">Baca</a></div></div>
+<div class="card"><img src="https://picsum.photos/200/150?7"><div class="card-body"><h4>Struktur Data</h4><p>Budi</p><a href="#" class="btn">Baca</a></div></div>
+<div class="card"><img src="https://picsum.photos/200/150?8"><div class="card-body"><h4>Database</h4><p>Siti</p><a href="#" class="btn">Baca</a></div></div>
+<div class="card"><img src="https://picsum.photos/200/150?9"><div class="card-body"><h4>Python</h4><p>Aji</p><a href="#" class="btn">Baca</a></div></div>
+<div class="card"><img src="https://picsum.photos/200/150?10"><div class="card-body"><h4>AI</h4><p>John</p><a href="#" class="btn">Baca</a></div></div>
+
+</div>
 </section>
 
 <footer class="footer">
@@ -402,49 +357,34 @@ width:100%;
 
 <script>
 
-/* sidebar */
-let sidebar = document.getElementById("sidebar");
-let overlay = document.getElementById("overlay");
-let toggleBtn = document.querySelector(".toggle-btn");
+let sidebar=document.getElementById("sidebar");
+let overlay=document.getElementById("overlay");
+let content=document.getElementById("content");
+let toggleBtn=document.querySelector(".toggle-btn");
 
-function toggleSidebar(event){
-
-event.stopPropagation();
-
+function toggleSidebar(){
 sidebar.classList.toggle("open");
 overlay.classList.toggle("show");
-toggleBtn.classList.toggle("hide");
-
+content.classList.toggle("shift");
+toggleBtn.classList.toggle("move");
 }
 
-overlay.addEventListener("click",function(){
-
+overlay.onclick=()=>{
 sidebar.classList.remove("open");
 overlay.classList.remove("show");
-toggleBtn.classList.remove("hide");
+content.classList.remove("shift");
+toggleBtn.classList.remove("move");
+}
 
-});
-
-/* slider */
-
+/* SLIDER */
 let index=0;
+let slides=document.querySelector(".slides");
+let total=document.querySelectorAll(".slides img").length;
 
-function slideBanner(){
-
-const slides=document.querySelector(".slides");
-const total=document.querySelectorAll(".slides img").length;
-
-index++;
-
-if(index>=total){
-index=0;
-}
-
+setInterval(()=>{
+index=(index+1)%total;
 slides.style.transform="translateX(-"+(index*100)+"%)";
-
-}
-
-setInterval(slideBanner,4000);
+},3000);
 
 </script>
 
