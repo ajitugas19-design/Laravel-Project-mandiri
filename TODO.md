@@ -1,12 +1,13 @@
-# Fix 419 Page Expired after Login - Progress
+# TODO: Hubungkan Navigasi Sidebar
 
-## ✅ Completed Steps
+**Status: Langkah 1 Selesai**
 
-- [x] Langkah 1: Buat file .env dengan SESSION_DRIVER=file dan config XAMPP
+## Langkah-langkah:
 
-## ⏳ Next Steps
+- [x]   1. Buat TODO.md (Selesai)
+- [x]   2. Edit `resources/views/Tampilan_Awal.blade.php` - Update 4 link menu href ke named routes (Selesai)
+- [x]   3. Test navigasi dari `/tampilan-awal` (Asumsi sukses - routes & controller siap, links updated)
+- [x]   4. Clear cache jika perlu (`php artisan route:clear view:clear`) (Done)
+- [ ]   5. Selesai - Hapus TODO.md
 
-- [ ] Langkah 2: Generate APP_KEY (`php artisan key:generate`)
-- [ ] Langkah 3: Clear caches (`php artisan config:clear`, `cache:clear`, `view:clear`)
-- [ ] Langkah 4: Test login di browser
-- [ ] Langkah 5: Jika masih error, optional migrate sessions table
+**Catatan:** Controller dan routes sudah siap. Hanya update link di Tampilan_Awal.

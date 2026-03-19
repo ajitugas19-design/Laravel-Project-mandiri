@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use App\Models\User;
@@ -36,7 +37,6 @@ class AuthController extends Controller
 
         $user = User::where('username', $request->username)->first();
 
-        // Plain text password from DB SQL dump
         if ($user && $request->password === $user->password) {
             Auth::login($user);
             return redirect('/tampilan-awal')->with('success', 'Login berhasil!');
@@ -57,7 +57,7 @@ class AuthController extends Controller
         $user = User::create([
             'username' => $request->username,
             'email' => $request->email,
-            'password' => $request->password, // Plain for now
+            'password' => $request->password,
             'deskripsi' => $request->deskripsi ?? '',
             'role' => 'user',
         ]);
@@ -85,7 +85,6 @@ class AuthController extends Controller
         return redirect('/')->with('success', 'Logout berhasil!');
     }
 
-    // Deprecated
     public function dashboard()
     {
         return $this->tampilanAwal();
@@ -104,11 +103,10 @@ class AuthController extends Controller
         return back()->with('error', 'Fitur coming soon');
     }
 
-    // Sidebar pages
     public function settingAccount()
     {
         $user = Auth::user();
-        return view('Sidebar.Setting_account', compact('user'));
+        return view('Sidebar.Acount.Setting_account', compact('user'));
     }
 
     public function bukuSimpan()
@@ -127,7 +125,38 @@ class AuthController extends Controller
     {
         return view('Sidebar.settings');
     }
+
+    public function settingProfile()
+    {
+        $user = auth()->user();
+        return view('Sidebar.Acount.Setting_profile', compact('user'));
+    }
+
+    public function updateProfile(Request $request)
+    {
+        $request->validate([
+            'username' => 'required|string|max:50',
+            'email' => ['required', 'email', Rule::unique('users')->ignore(auth()->user()->id_user, 'id_user')],
+            'deskripsi' => 'nullable|string',
+            'foto' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+        ]);
+
+        $user = auth()->user();
+        $data = $request->only('username', 'email', 'deskripsi');
+
+        if ($request->hasFile('foto')) {
+            if ($user->foto && file_exists(public_path('images/profiles/' . $user->foto))) {
+                unlink(public_path('images/profiles/' . $user->foto));
+            }
+            $foto = $request->file('foto');
+            $filename = time() . '_' . $foto->getClientOriginalName();
+            $foto->move(public_path('images/profiles'), $filename);
+            $data['foto'] = $filename;
+        }
+
+        $user->update($data);
+
+        return redirect()->route('tampilan-awal')->with('success', 'Profile berhasil diupdate!');
+    }
 }
-
-
 

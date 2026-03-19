@@ -26,7 +26,10 @@ Route::middleware('auth')->group(function () {
     Route::get('/sidebar/buku-simpan', [AuthController::class, 'bukuSimpan'])->name('sidebar.buku-simpan');
     Route::get('/sidebar/scane-barcode', [AuthController::class, 'scaneBarcode'])->name('sidebar.scane-barcode');
     Route::get('/sidebar/settings', [AuthController::class, 'sidebarSettings'])->name('sidebar.settings');
+    
+    // Profile edit
+    Route::get('/setting-profile', [AuthController::class, 'settingProfile'])->name('setting.profile');
+    Route::post('/setting-profile', [AuthController::class, 'updateProfile'])->name('profile.update');
+
 });
-
-
 

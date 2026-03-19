@@ -281,18 +281,18 @@ grid-template-columns:1fr;
 <!-- SIDEBAR -->
 <div class="sidebar" id="sidebar">
 <div class="profile">
-<img src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png">
+<img src="{{ $user->foto ? '/images/profiles/' . $user->foto : 'https://cdn-icons-png.flaticon.com/512/3135/3135715.png' }}" style="width:50px; border-radius:50%;">
 <div>
 <h3>{{ $user->username }}</h3>
-<p>{{ $user->keterangan ?? 'Account' }}</p>
+<p>{{ $user->deskripsi ?? 'Account' }}</p>
 </div>
 </div>
 
 <div class="menu">
-<a href="#">Setting Account</a>
-<a href="#">Buku Tersimpan</a>
-<a href="#">Scan Barcode</a>
-<a href="#">Settings</a>
+<a href="{{ route('sidebar.setting-account') }}">Setting Account</a>
+<a href="{{ route('sidebar.buku-simpan') }}">Buku Tersimpan</a>
+<a href="{{ route('sidebar.scane-barcode') }}">Scan Barcode</a>
+<a href="{{ route('sidebar.settings') }}">Settings</a>
 </div>
 </div>
 
